@@ -1,12 +1,27 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
-export class App {
-  protected readonly title = signal('task-manager-angular');
+export class AppComponent { // ✅ Nome padronizado e exportado
+  novaTarefa: string = '';
+  listaTarefas: string[] = [];
+
+  adicionarTarefa(): void {
+    const tarefa = this.novaTarefa.trim();
+    if (tarefa) {
+      this.listaTarefas.push(tarefa);
+      this.novaTarefa = '';
+    }
+  }
+
+  removerTarefa(indice: number): void {
+    this.listaTarefas.splice(indice, 1);
+  }
 }
